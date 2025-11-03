@@ -39,6 +39,14 @@ define Package/iw-full
   PROVIDES:=iw
 endef
 
+IW_PATCH_DIR:=$(CURDIR)/patches
+FILE_DIR_IW:=$(CURDIR)/priv_patches
+
+define Build/Patch
+	$(call PatchDir,$(PKG_BUILD_DIR),$(IW_PATCH_DIR),patches/)
+	$(call PatchDir,$(PKG_BUILD_DIR),$(FILE_DIR_IW)/patches,patches/)
+endef
+
 define Build/Configure
 	echo "const char iw_version[] = \"$(PKG_VERSION)\";" > $(PKG_BUILD_DIR)/version.c
 	echo "#!/bin/sh" > $(PKG_BUILD_DIR)/version.sh
